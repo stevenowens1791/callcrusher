@@ -1,0 +1,91 @@
+<head>
+  <title>BetterCall</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">CallCrusher</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="{{#if onDashboard}}active{{/if}}"><a href="/">Dashboard</a></li>
+            {{#if currentUser}}<li class="{{#if onContacts}}active{{/if}}"><a href="/contacts">Contacts</a></li>
+            <li><a href="#about">RapidCall</a></li>{{/if}}
+            <li><a href="#contact">About</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+			{{> loginButtons}} <!-- here -->
+		</ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+  <p style="height: 55px;"></p>
+
+    {{> App_body}}
+
+
+
+
+
+</body>
+
+<template name="contact">
+<tr>
+	<td>{{name}}</td>
+	<td>{{phone}}</td>
+	<td>{{lastCalled}}</td>
+	<td><button class="call">Call</button></td>
+</tr>
+</template>
+
+<template name="Contacts_show">
+ <div class="container">
+  <h1>Contacts</h1>
+
+  {{#if currentUser}}
+        <form class="new-contact">
+         Add a contact: <input type="text" name="name" placeholder="Name" />
+		 <input type="text" name="phone" placeholder="Phone Number" />
+		 <button type="submit">Add Contact</button>
+        </form>
+      {{/if}}
+
+<table>
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Phone</th>
+				<th>Last Called</th>
+				<th>Call Now</th>
+			</tr>
+		</thead>
+      {{#each contacts}}
+        {{> contact}}
+      {{/each}}
+    </table>
+  </div>
+</template>
+
+<template name="Dashboard">
+<div class="container">
+  <div class="jumbotron">
+  <h1>Welcome to CallCrusher</h1>
+  <p>Call more leads, make more money.</p>
+  <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
+</div>
+  </div>
+</template>
+
+<template name="App_body">
+  {{> Template.dynamic template=main}}
+</template>
+
