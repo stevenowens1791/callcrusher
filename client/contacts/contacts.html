@@ -1,0 +1,36 @@
+<template name="contact">
+<tr>
+	<td>{{name}}</td>
+	<td>{{phone}}</td>
+	<td>{{lastCalled}}</td>
+	<td><button class="call">Call</button></td>
+</tr>
+</template>
+
+<template name="Contacts_show">
+ <div class="container">
+  <h1>Contacts</h1>
+
+  {{#if currentUser}}
+        <form class="new-contact">
+         Add a contact: <input type="text" name="name" placeholder="Name" />
+		 <input type="text" name="phone" placeholder="Phone Number" />
+		 <button type="submit">Add Contact</button>
+        </form>
+      {{/if}}
+
+<table>
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Phone</th>
+				<th>Last Called</th>
+				<th>Call Now</th>
+			</tr>
+		</thead>
+      {{#each contacts}}
+        {{> contact}}
+      {{/each}}
+    </table>
+  </div>
+</template>
