@@ -32,7 +32,7 @@ Template.Contacts_show.helpers({
    });
 
    Template.contact.events({
-    "click .call": function () {
+    "click": function () {
 
 	document.location.href = 'tel:'+this.phone;
 	Contacts.update(this._id, {

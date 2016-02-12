@@ -5,6 +5,12 @@
   }
 });
 
+  FlowRouter.route('/about', {
+  name: 'About.show',
+  action() {
+    BlazeLayout.render('App_body', {main: 'About'});
+  }
+});
     FlowRouter.route('/', {
   name: 'Dashboard.show',
   action() {
@@ -38,5 +44,4 @@
 	  Accounts.ui.config({
     passwordSignupFields: "USERNAME_ONLY"
   });
-  
-  
+

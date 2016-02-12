@@ -3,7 +3,7 @@
 	<td>{{name}}</td>
 	<td>{{phone}}</td>
 	<td>{{lastCalled}}</td>
-	<td><button class="call">Call</button></td>
+
 </tr>
 </template>
 
@@ -12,25 +12,55 @@
   <h1>Contacts</h1>
 
   {{#if currentUser}}
-        <form class="new-contact">
-         Add a contact: <input type="text" name="name" placeholder="Name" />
-		 <input type="text" name="phone" placeholder="Phone Number" />
-		 <button type="submit">Add Contact</button>
-        </form>
+   <button type="button" class="btn btn-default btn-lg"  data-toggle="modal" data-target="#newContact">
+  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Contact
+</button>
+
       {{/if}}
 
-<table>
+   <!-- Modal -->
+<div class="modal fade" id="newContact" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Add a Contact</h4>
+      </div>
+      <div class="modal-body">
+        <form class="new-contact">
+          <div class="form-group float-label-control">
+        <label for="name">Name</label>
+        <input type="Text" class="form-control" name="name" placeholder="Name">
+  </div>
+          <div class="form-group float-label-control">
+        <label for="phone">Phone Number</label>
+        <input type="tel" class="form-control" name="phone" placeholder="Phone Number">
+  </div>
+
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Add Contact</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<table class="table table-hover">
 		<thead>
 			<tr>
 				<th>Name</th>
 				<th>Phone</th>
 				<th>Last Called</th>
-				<th>Call Now</th>
 			</tr>
 		</thead>
+  <tbody>
       {{#each contacts}}
         {{> contact}}
       {{/each}}
-    </table>
+  </tbody>
+   </table>
   </div>
 </template>
