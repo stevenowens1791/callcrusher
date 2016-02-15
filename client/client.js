@@ -18,7 +18,7 @@ Template.body.helpers({
   },
 
   onRapidCall: function() {
-    return FlowRouter.getRouterName() == 'RapidCall'
+    return FlowRouter.getRouteName() == 'RapidCall'
   },
 
   contacts: function() {

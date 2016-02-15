@@ -2,8 +2,13 @@ Template.Contacts_show.helpers({
   contacts: function() {
     return Contacts.find();
   }
-
 });
+
+Template.registerHelper('FormatDate', function(date){
+  if(date == null) return "";
+  return moment(date).format("MM/DD/YYYY")
+})
+
 Template.contact_form.onRendered(function() {
   $('.float-label-control').floatLabels()
 });
@@ -11,9 +16,7 @@ Template.contact_form.onRendered(function() {
 
 Template.contact_form.events({
   "click #cancelCreateContact": function() {
-    BlazeLayout.render('App_body', {
-      main: 'Contacts_show'
-    });
+    document.location = "/contacts";
   },
   "submit .new-contact": function(event) {
 
@@ -31,15 +34,14 @@ Template.contact_form.events({
       phone: phoneProp,
       createdBy: Meteor.user().username,
       lastCalled: null,
+      everCalled: false,
       createdAt: new Date() // current time
     });
 
     // Clear form
     event.target.name.value = "";
     event.target.phone.value = "";
-    BlazeLayout.render('App_body', {
-      main: 'Contacts_show'
-    });
+    document.location = "/contacts";
   }
 });
 
@@ -49,7 +51,8 @@ Template.contact.events({
     document.location.href = 'tel:' + this.phone;
     Contacts.update(this._id, {
       $set: {
-        lastCalled: new Date()
+        lastCalled: new Date(),
+        everCalled: true
       }
     });
   }
