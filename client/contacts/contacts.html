@@ -12,41 +12,13 @@
   <h1>Contacts</h1>
 
   {{#if currentUser}}
-   <button type="button" class="btn btn-default btn-lg"  data-toggle="modal" data-target="#newContact">
+   <a type="button" class="btn btn-default btn-lg" href="/contacts/new">
   <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Contact
-</button>
+</a>
 
       {{/if}}
 
-   <!-- Modal -->
-<div class="modal fade" id="newContact" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Add a Contact</h4>
-      </div>
-      <div class="modal-body">
-        <form class="new-contact">
-          <div class="form-group float-label-control">
-        <label for="name">Name</label>
-        <input type="Text" class="form-control" name="name" placeholder="Name">
-  </div>
-          <div class="form-group float-label-control">
-        <label for="phone">Phone Number</label>
-        <input type="tel" class="form-control" name="phone" placeholder="Phone Number">
-  </div>
 
-
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Add Contact</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 <table class="table table-hover">
 		<thead>
@@ -62,5 +34,23 @@
       {{/each}}
   </tbody>
    </table>
+  </div>
+</template>
+
+<template name="contact_form">
+   <div class="container">
+     <h1>New Contact</h1>
+ <form class="new-contact">
+          <div class="form-group float-label-control">
+        <label for="name">Name</label>
+        <input type="Text" class="form-control" name="name" placeholder="Name">
+  </div>
+          <div class="form-group float-label-control">
+        <label for="phone">Phone Number</label>
+        <input type="tel" class="form-control" name="phone" placeholder="Phone Number">
+  </div>
+   <button type="submit" class="btn btn-primary btn-lg" id="submitContact">Save</button> <button class="btn btn-default btn-lg" id="cancelCreateContact">Cancel</button>
+
+        </form>
   </div>
 </template>

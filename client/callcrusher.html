@@ -19,7 +19,7 @@
           <ul class="nav navbar-nav">
             <li class="{{#if onDashboard}}active{{/if}}"><a href="/">Dashboard</a></li>
             {{#if currentUser}}<li class="{{#if onContacts}}active{{/if}}"><a href="/contacts">Contacts</a></li>
-            <li><a href="#about">RapidCall</a></li>{{/if}}
+            <li class="{{#if onRapidCall}}active{{/if}}"><a href="/rapid">RapidCall</a></li>{{/if}}
             <li class="{{#if onAbout}}active{{/if}}"><a href="/about">About</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">

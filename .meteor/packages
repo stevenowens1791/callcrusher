@@ -24,3 +24,5 @@ ian:accounts-ui-bootstrap-3
 kadira:blaze-layout
 kadira:flow-router
 zimme:active-route
+tsega:bootstrap3-floating-labels
+momentjs:moment
