@@ -5,11 +5,13 @@ function getRapidCallList(specs) {
   return Contacts.find({},{sort: [['everCalled', 'asc'],['lastCalled', 'desc']]}).fetch();
 }
 
-currentRapidList = [];
+var currentRapidList = [];
+var currentRapidIndex = 0;
 
 Template.RapidCallStart.events({
   "click .startRapid":function(){
     currentRapidList = getRapidCallList();
+    currentRapidIndex = 0;
     console.log(currentRapidList);
   }
 });
