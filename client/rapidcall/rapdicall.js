@@ -7,13 +7,25 @@ function getRapidCallList(specs) {
 
 var currentRapidList = [];
 var currentRapidIndex = 0;
+var currentContact;
 
 Template.RapidCallStart.events({
   "click .startRapid":function(){
     currentRapidList = getRapidCallList();
     currentRapidIndex = 0;
     console.log(currentRapidList);
+    nextCall();
   }
 });
 
-function nextCall() {}
+function nextCall() {
+  currentContact = currentRapidList[currentRapidIndex];
+   BlazeLayout.render('App_body', {
+      main: 'callIntro'
+    });
+}
+
+Template.callIntro.helpers({
+  "name" : currentContact.name,
+  "lastCalled" : currentContact.lastCalled
+})
