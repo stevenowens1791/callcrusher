@@ -20,12 +20,19 @@ Template.RapidCallStart.events({
 
 function nextCall() {
   currentContact = currentRapidList[currentRapidIndex];
+  if(currentContact.phone.length < 1) goToNextCall();
    BlazeLayout.render('App_body', {
       main: 'callIntro'
     });
 }
 
+function goToNextCall() {
+  currentRapidIndex++;
+  // TODO: stop when at end of list
+  nextCall();
+}
+
 Template.callIntro.helpers({
-  "name" : currentContact.name,
-  "lastCalled" : currentContact.lastCalled
+  "name" : function(){ return currentContact.name},
+  "lastCalled" : function(){ return currentContact.lastCalled}
 })
