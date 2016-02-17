@@ -9,7 +9,8 @@ var currentRapidList = [];
 var currentRapidIndex = 0;
 var currentContact;
 var currentCountdown;
-var currentCountdown;
+var currentCallLengthTimer;
+var callTimer;
 
 Template.RapidCallStart.events({
   "click .startRapid":function(){
@@ -50,6 +51,8 @@ Template.callIntro.onRendered(function(){
   currentCountdown.start();
 });
 
+var callStart;
+
 Template.callIntro.events({
   "click .callNow" : function(){
     currentCountdown.stop();
@@ -57,5 +60,18 @@ Template.callIntro.events({
     // TODO: credit the points
     document.location.href = 'tel:' + currentContact.phone;
     Meteor.call("recordCall", currentContact);
+    callStart = new Date();
+    currentCallLengthTimer = new ReactiveCountdown(0, {steps: -1});
+     BlazeLayout.render('App_body', {
+      main: 'callDone'
+    });
   }
+});
+
+Template.callDone.onRendered(function(){
+  currentCallLengthTimer.start();
+});
+
+Template.callDone.helpers({
+  getTimer: function(){return  currentCallLengthTimer.get()}
 });
