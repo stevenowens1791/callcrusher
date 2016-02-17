@@ -56,6 +56,6 @@ Template.callIntro.events({
     // TODO: start call timer
     // TODO: credit the points
     document.location.href = 'tel:' + currentContact.phone;
-    Meteor.call("recordCall", currentContact._id);
+    Meteor.call("recordCall", currentContact);
   }
 });
