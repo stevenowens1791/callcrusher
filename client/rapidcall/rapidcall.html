@@ -13,9 +13,9 @@
     <h1>Rapid Call</h1>
     <h2>Here is your next call:</h2>
     Name: {{name}}<br />
-    Last Called: {{FormatDate lastCalled}}<br />
+    {{#if lastCalled}}Last Called: {{FormatDate lastCalled}}<br />{{/if}}
     Time left: {{getCountdown}} seconds<br />
-    Points available: <br />
+    Points available: {{getPoints}}<br />
 
     <a class="callNow btn btn-primary btn-lg" role="button">Dial Now</a>
   </div>
