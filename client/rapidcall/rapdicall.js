@@ -8,6 +8,8 @@ function getRapidCallList(specs) {
 var currentRapidList = [];
 var currentRapidIndex = 0;
 var currentContact;
+var currentCountdown;
+var currentCountdown;
 
 Template.RapidCallStart.events({
   "click .startRapid":function(){
@@ -20,6 +22,7 @@ Template.RapidCallStart.events({
 
 function nextCall() {
   currentContact = currentRapidList[currentRapidIndex];
+  currentCountdown = new ReactiveCountdown(30, {interval: 500}); // TODO: this should be configurable
   if(currentContact.phone.length < 1) goToNextCall();
    BlazeLayout.render('App_body', {
       main: 'callIntro'
@@ -34,5 +37,6 @@ function goToNextCall() {
 
 Template.callIntro.helpers({
   "name" : function(){ return currentContact.name},
-  "lastCalled" : function(){ return currentContact.lastCalled}
+  "lastCalled" : function(){ return currentContact.lastCalled},
+  getCountdown: function(){return currentCountdown.get()}
 })
