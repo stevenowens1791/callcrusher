@@ -24,9 +24,19 @@
 <template name="callDone">
   <div class="container">
     <h1>Rapid Call</h1>
-    Call length: {{getTimer}} seconds
-    <a class="positiveCall btn btn-success btn-lg" role="button">Positive Call</a>
-    <a class="leftMessage btn btn-info btn-lg" role="button">Left Voicemail</a>
-    <a class="negative btn btn-danger btn-lg" role="button">Negative Call</a>
+    <div class="well">Call to {{name}} at {{phone_number}} length: {{getTimer}} seconds</div>
+
+<div class="panel panel-default follow_up hidden">
+  <div class="panel-heading">
+    <h3 class="panel-title">Call Results</h3>
+  </div>
+  <div class="panel-body">
+     <a class="positiveCall btn btn-success btn-lg btn-block" role="button">Positive Call</a>
+    <a class="leftMessage btn btn-info btn-lg btn-block" role="button">Left Voicemail</a>
+    <a class="negative btn btn-danger btn-lg btn-block" role="button">Negative Call</a>
+  </div>
+</div>
+
+
   </div>
 </template>

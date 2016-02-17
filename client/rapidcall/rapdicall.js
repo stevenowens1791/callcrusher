@@ -68,10 +68,34 @@ Template.callIntro.events({
   }
 });
 
+function onFocus(myFunc) {
+
+
+  if ( document.hasFocus() ) {
+    myFunc();
+  } else {
+    //
+  }
+}
+
+var currentCallLength;
+
 Template.callDone.onRendered(function(){
   currentCallLengthTimer.start();
+
+  var checkFocus = setInterval( function(){ onFocus(function(){
+    currentCallLengthTimer.stop();
+    currentCallLength = currentCallLengthTimer.get();
+    clearInterval(checkFocus);
+    $('.follow_up').removeClass('hidden');
+  })}, 200 );
+
+
+
 });
 
 Template.callDone.helpers({
-  getTimer: function(){return  currentCallLengthTimer.get()}
+  getTimer: function(){return  currentCallLengthTimer.get()},
+  "name" : function(){ return currentContact.name},
+  phone_number: function(){return currentContact.phone}
 });
