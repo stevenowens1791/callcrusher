@@ -49,11 +49,6 @@ Template.contact.events({
   "click": function() {
 
     document.location.href = 'tel:' + this.phone;
-    Contacts.update(this._id, {
-      $set: {
-        lastCalled: new Date(),
-        everCalled: true
-      }
-    });
+    Meteor.call("recordCall", this._id);
   }
 });

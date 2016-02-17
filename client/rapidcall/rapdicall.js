@@ -25,7 +25,7 @@ function nextCall() {
    if(currentContact.phone.length < 1) {
      goToNextCall();
    } else {
-  currentCountdown = new ReactiveCountdown(secondsToCall); 
+  currentCountdown = new ReactiveCountdown(secondsToCall);
   console.log(currentCountdown);
    BlazeLayout.render('App_body', {
       main: 'callIntro'
@@ -48,4 +48,14 @@ Template.callIntro.helpers({
 
 Template.callIntro.onRendered(function(){
   currentCountdown.start();
+});
+
+Template.callIntro.events({
+  "click .callNow" : function(){
+    currentCountdown.stop();
+    // TODO: start call timer
+    // TODO: credit the points
+    document.location.href = 'tel:' + currentContact.phone;
+    Meteor.call("recordCall", currentContact._id);
+  }
 });
