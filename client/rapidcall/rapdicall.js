@@ -2,7 +2,12 @@ function getRapidCallList(specs) {
   // In the future specs can be used to say get a selection
   // of contacts or the sort order.  For now just get the list
   // starting with those never called then the longest ago call
-  return Contacts.find({},{sort: [['everCalled', 'asc'],['lastCalled', 'desc']]}).fetch();
+  return Contacts.find({}, {
+    sort: [
+      ['everCalled', 'asc'],
+      ['lastCalled', 'desc']
+    ]
+  }).fetch();
 }
 
 var currentRapidList = [];
@@ -13,7 +18,7 @@ var currentCallLengthTimer;
 var callTimer;
 
 Template.RapidCallStart.events({
-  "click .startRapid":function(){
+  "click .startRapid": function() {
     currentRapidList = getRapidCallList();
     currentRapidIndex = 0;
     console.log(currentRapidList);
@@ -23,15 +28,16 @@ Template.RapidCallStart.events({
 
 function nextCall() {
   currentContact = currentRapidList[currentRapidIndex];
-   if(currentContact.phone.length < 1) {
-     goToNextCall();
-   } else {
-  currentCountdown = new ReactiveCountdown(secondsToCall);
-  console.log(currentCountdown);
-   BlazeLayout.render('App_body', {
+  if (currentContact.phone.length < 1) {
+    goToNextCall();
+  }
+  else {
+    currentCountdown = new ReactiveCountdown(secondsToCall);
+    console.log(currentCountdown);
+    BlazeLayout.render('App_body', {
       main: 'callIntro'
     });
-   }
+  }
 }
 
 function goToNextCall() {
@@ -41,28 +47,38 @@ function goToNextCall() {
 }
 
 Template.callIntro.helpers({
-  "name" : function(){ return currentContact.name},
-  "lastCalled" : function(){ return currentContact.lastCalled},
-  getCountdown: function(){return currentCountdown.get()},
-  getPoints: function(){return currentCountdown.get() * pointsPerSecond}
+  "name": function() {
+    return currentContact.name
+  },
+  "lastCalled": function() {
+    return currentContact.lastCalled
+  },
+  getCountdown: function() {
+    return currentCountdown.get()
+  },
+  getPoints: function() {
+    return currentCountdown.get() * pointsPerSecond
+  }
 });
 
-Template.callIntro.onRendered(function(){
+Template.callIntro.onRendered(function() {
   currentCountdown.start();
 });
 
 var callStart;
 
 Template.callIntro.events({
-  "click .callNow" : function(){
+  "click .callNow": function() {
     currentCountdown.stop();
     // TODO: start call timer
     // TODO: credit the points
     document.location.href = 'tel:' + currentContact.phone;
     Meteor.call("recordCall", currentContact);
     callStart = new Date();
-    currentCallLengthTimer = new ReactiveCountdown(0, {steps: -1});
-     BlazeLayout.render('App_body', {
+    currentCallLengthTimer = new ReactiveCountdown(0, {
+      steps: -1
+    });
+    BlazeLayout.render('App_body', {
       main: 'callDone'
     });
   }
@@ -71,31 +87,38 @@ Template.callIntro.events({
 function onFocus(myFunc) {
 
 
-  if ( document.hasFocus() ) {
+  if (document.hasFocus()) {
     myFunc();
-  } else {
+  }
+  else {
     //
   }
 }
 
 var currentCallLength;
 
-Template.callDone.onRendered(function(){
+Template.callDone.onRendered(function() {
   currentCallLengthTimer.start();
 
-  var checkFocus = setInterval( function(){ onFocus(function(){
-    currentCallLengthTimer.stop();
-    currentCallLength = currentCallLengthTimer.get();
-    clearInterval(checkFocus);
-    $('.follow_up').removeClass('hidden');
-  })}, 200 );
-
-
+  var checkFocus = setInterval(function() {
+    onFocus(function() {
+      currentCallLengthTimer.stop();
+      currentCallLength = currentCallLengthTimer.get();
+      clearInterval(checkFocus);
+      $('.follow_up').removeClass('hidden');
+    })
+  }, 200);
 
 });
 
 Template.callDone.helpers({
-  getTimer: function(){return  currentCallLengthTimer.get()},
-  "name" : function(){ return currentContact.name},
-  phone_number: function(){return currentContact.phone}
+  getTimer: function() {
+    return currentCallLengthTimer.get()
+  },
+  "name": function() {
+    return currentContact.name
+  },
+  phone_number: function() {
+    return currentContact.phone
+  }
 });
