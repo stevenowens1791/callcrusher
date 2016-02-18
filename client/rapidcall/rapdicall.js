@@ -70,10 +70,10 @@ var callStart;
 Template.callIntro.events({
   "click .callNow": function() {
     currentCountdown.stop();
-    // TODO: start call timer
     // TODO: credit the points
     document.location.href = 'tel:' + currentContact.phone;
-    Meteor.call("recordCall", currentContact);
+    //Meteor.call("recordCall", currentContact);
+    currentContact.recordCall();
     callStart = new Date();
     currentCallLengthTimer = new ReactiveCountdown(0, {
       steps: -1
@@ -85,13 +85,8 @@ Template.callIntro.events({
 });
 
 function onFocus(myFunc) {
-
-
   if (document.hasFocus()) {
     myFunc();
-  }
-  else {
-    //
   }
 }
 
@@ -120,5 +115,11 @@ Template.callDone.helpers({
   },
   phone_number: function() {
     return currentContact.phone
+  }
+});
+
+Template.callDone.events({
+  "click .positiveCall" : function(){
+    
   }
 });

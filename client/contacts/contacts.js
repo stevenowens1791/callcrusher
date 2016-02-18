@@ -47,8 +47,8 @@ Template.contact_form.events({
 
 Template.contact.events({
   "click": function() {
-
-    document.location.href = 'tel:' + this.phone;
-    Meteor.call("recordCall", this._id);
+    //TODO: Edit contact here
+    /*document.location.href = 'tel:' + this.phone;
+    Meteor.call("recordCall", this._id);*/
   }
 });
