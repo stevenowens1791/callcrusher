@@ -20,6 +20,10 @@ Template.body.helpers({
   onRapidCall: function() {
     return FlowRouter.getRouteName() == 'RapidCall'
   },
+  
+  onCall: function() {
+    return FlowRouter.getRouteName() == 'Call'
+  },
 
   contacts: function() {
     return Contacts.find();
