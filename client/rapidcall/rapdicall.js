@@ -73,7 +73,7 @@ Template.callIntro.events({
     // TODO: credit the points
     document.location.href = 'tel:' + currentContact.phone;
     //Meteor.call("recordCall", currentContact);
-    currentContact.recordCall();
+
     callStart = new Date();
     currentCallLengthTimer = new ReactiveCountdown(0, {
       steps: -1
@@ -120,6 +120,7 @@ Template.callDone.helpers({
 
 Template.callDone.events({
   "click .positiveCall" : function(){
-    
+        currentContact.recordCall(currentCallLengthTimer.get(), 'positive');
+        console.log('Call recorded!!!!!!!!!')
   }
 });

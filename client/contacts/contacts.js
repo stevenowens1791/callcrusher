@@ -27,8 +27,6 @@ Template.contact_form.events({
     var nameProp = event.target.name.value;
     var phoneProp = event.target.phone.value;
 
-    // Insert a task into the collection
-    // Insert a task into the collection
     Contacts.insert({
       name: nameProp,
       phone: phoneProp,

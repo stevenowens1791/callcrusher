@@ -1,6 +1,6 @@
 // An Contact class that takes a document in its constructor
 Contact = function (doc) {
-  _.extend(this, doc);
+_.extend(this, doc);
 };
 _.extend(Contact.prototype, {
   recordCall: function(seconds_length, outcome, comment) {
@@ -11,7 +11,7 @@ _.extend(Contact.prototype, {
       }
     });
     // Create a new call record
-    Calls.insert({
+    var myReturn = Calls.insert({
       to: this.name,
       to_id: this._id,
       from: Meteor.user().username,
@@ -21,7 +21,9 @@ _.extend(Contact.prototype, {
       comment: comment,
       callEnded: new Date() // current time
     });
-
+    console.log('Call added!!!!!!!!!');
+    console.log(myReturn);
+    console.log(Calls);
   }
 });
 

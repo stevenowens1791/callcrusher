@@ -1,0 +1,37 @@
+<template name="call_display">
+<tr>
+	<td>{{to}}</td>
+	<td>{{from}}</td>
+	<td>{{FormatDate callEnded}}</td>
+	<td>{{length_seconds}}</td>
+	<td>{{outcome}}</td>
+	<td></td>
+</tr>
+</template>
+
+<template name="Calls_show">
+ <div class="container">
+  <h1>Calls</h1>
+
+
+
+<table class="table">
+		<thead>
+			<tr>
+				<th>To</th>
+				<th>From</th>
+				<th>Date</th>
+				<th>Length</th>
+				<th>Outcome</th>
+				<th>Note</th>
+			</tr>
+		</thead>
+  <tbody>
+      {{#each calls}}
+        {{> call_display}}
+      {{/each}}
+  </tbody>
+   </table>
+  </div>
+</template>
+

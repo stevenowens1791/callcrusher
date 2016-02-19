@@ -1,4 +1,4 @@
-
+/* global FlowRouter Contacts*/
 Template.body.helpers({
 
   activePage: function() {
@@ -6,23 +6,23 @@ Template.body.helpers({
   },
 
   onDashboard: function() {
-    return FlowRouter.getRouteName() == 'Dashboard.show'
+    return FlowRouter.getRouteName() == 'Dashboard.show';
   },
 
   onContacts: function() {
-    return FlowRouter.getRouteName() == 'Contacts.show'
+    return FlowRouter.getRouteName() == 'Contacts.show';
   },
 
   onAbout: function() {
-    return FlowRouter.getRouteName() == 'About.show'
+    return FlowRouter.getRouteName() == 'About.show';
   },
 
   onRapidCall: function() {
-    return FlowRouter.getRouteName() == 'RapidCall'
+    return FlowRouter.getRouteName() == 'RapidCall';
   },
   
   onCall: function() {
-    return FlowRouter.getRouteName() == 'Call'
+    return FlowRouter.getRouteName() == 'Call';
   },
 
   contacts: function() {
