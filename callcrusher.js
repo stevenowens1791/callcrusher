@@ -1,10 +1,12 @@
 // An Contact class that takes a document in its constructor
-Contact = function (doc) {
-_.extend(this, doc);
+/* global Contact Contacts _ */
+
+Contact = function(doc) {
+  _.extend(this, doc);   
 };
 _.extend(Contact.prototype, {
   recordCall: function(seconds_length, outcome, comment) {
-     Contacts.update(this._id, {
+    Contacts.update(this._id, {
       $set: {
         lastCalled: new Date(),
         everCalled: true
@@ -21,14 +23,20 @@ _.extend(Contact.prototype, {
       comment: comment,
       callEnded: new Date() // current time
     });
+  },
+  delete: function() {
+    Contacts.remove(this._id);
   }
 });
 
 
-Contacts = new Mongo.Collection("contacts", {transform: function (doc) { return new Contact(doc);}});
+Contacts = new Mongo.Collection("contacts", {
+  transform: function(doc) {
+    return new Contact(doc);
+  }
+});
 Calls = new Mongo.Collection("calls");
 
 // Some things that should be configurable later
 pointsPerSecond = 5;
 secondsToCall = 30;
-
