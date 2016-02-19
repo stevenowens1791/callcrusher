@@ -4,10 +4,7 @@ Template.Contacts_show.helpers({
   }
 });
 
-Template.registerHelper('FormatDate', function(date){
-  if(date == null) return "";
-  return moment(date).format("MM/DD/YYYY")
-})
+
 
 Template.contact_form.onRendered(function() {
   $('.float-label-control').floatLabels()

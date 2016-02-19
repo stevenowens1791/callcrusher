@@ -38,6 +38,16 @@ jQuery.validator.addMethod('phoneUS', function(phone_number, element) {
         phone_number.match(/^(1-?)?(\([2-9]\d{2}\)|[2-9]\d{2})-?[2-9]\d{2}-?\d{4}$/);
 }, 'Please enter a valid phone number.');
 
+Template.registerHelper('FormatDate', function(date){
+  if(date == null) return "";
+  return moment(date).format("MM/DD/YYYY")
+});
+
+Template.registerHelper('FormatDatetime', function(date){
+  if(date == null) return "";
+  return moment(date).format("MM/DD/YYYY h:mma")
+});
+
 Accounts.ui.config({
   passwordSignupFields: "USERNAME_ONLY"
 });
