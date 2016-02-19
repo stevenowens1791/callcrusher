@@ -21,9 +21,6 @@ _.extend(Contact.prototype, {
       comment: comment,
       callEnded: new Date() // current time
     });
-    console.log('Call added!!!!!!!!!');
-    console.log(myReturn);
-    console.log(Calls);
   }
 });
 

@@ -19,12 +19,21 @@ var callTimer;
 
 Template.RapidCallStart.events({
   "click .startRapid": function() {
-    currentRapidList = getRapidCallList();
-    currentRapidIndex = 0;
-    console.log(currentRapidList);
-    nextCall();
+    startRapid();
   }
 });
+
+Template.RapidDone.events({
+  "click .startRapid": function() {
+    startRapid();
+  }
+});
+
+function startRapid(){
+    currentRapidList = getRapidCallList();
+    currentRapidIndex = 0;
+    nextCall();
+}
 
 function nextCall() {
   currentContact = currentRapidList[currentRapidIndex];
@@ -33,7 +42,6 @@ function nextCall() {
   }
   else {
     currentCountdown = new ReactiveCountdown(secondsToCall);
-    console.log(currentCountdown);
     BlazeLayout.render('App_body', {
       main: 'callIntro'
     });
@@ -42,22 +50,27 @@ function nextCall() {
 
 function goToNextCall() {
   currentRapidIndex++;
-  // TODO: stop when at end of list
+  if( currentRapidIndex  >= currentRapidList.length) {
+        BlazeLayout.render('App_body', {
+      main: 'RapidDone'
+    });
+  } else {
   nextCall();
+  }
 }
 
 Template.callIntro.helpers({
   "name": function() {
-    return currentContact.name
+    return currentContact.name;
   },
   "lastCalled": function() {
-    return currentContact.lastCalled
+    return currentContact.lastCalled;
   },
   getCountdown: function() {
-    return currentCountdown.get()
+    return currentCountdown.get();
   },
   getPoints: function() {
-    return currentCountdown.get() * pointsPerSecond
+    return currentCountdown.get() * pointsPerSecond;
   }
 });
 
@@ -72,7 +85,6 @@ Template.callIntro.events({
     currentCountdown.stop();
     // TODO: credit the points
     document.location.href = 'tel:' + currentContact.phone;
-    //Meteor.call("recordCall", currentContact);
 
     callStart = new Date();
     currentCallLengthTimer = new ReactiveCountdown(0, {
@@ -119,8 +131,21 @@ Template.callDone.helpers({
 });
 
 Template.callDone.events({
+  // TODO: This should be cleaned up/modularized
   "click .positiveCall" : function(){
         currentContact.recordCall(currentCallLengthTimer.get(), 'positive');
-        console.log('Call recorded!!!!!!!!!')
+        goToNextCall();
+  },
+  "click .negativeCall" : function(){
+        currentContact.recordCall(currentCallLengthTimer.get(), 'negative');
+        goToNextCall();
+  },
+  "click .noAnswer" : function(){
+        currentContact.recordCall(currentCallLengthTimer.get(), 'noAnswer');
+        goToNextCall();
+  },
+  "click .leftMessage" : function(){
+        currentContact.recordCall(currentCallLengthTimer.get(), 'leftMessage')
+        goToNextCall();
   }
 });
