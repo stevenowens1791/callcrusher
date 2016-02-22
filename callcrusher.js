@@ -40,3 +40,5 @@ Calls = new Mongo.Collection("calls");
 // Some things that should be configurable later
 pointsPerSecond = 5;
 secondsToCall = 30;
+
+
