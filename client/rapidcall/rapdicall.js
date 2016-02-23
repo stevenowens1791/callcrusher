@@ -1,3 +1,4 @@
+/* global BlazeLayout Contacts ReactiveCountdown  secondsToCall pointsPerSecond */
 function getRapidCallList(specs) {
   // In the future specs can be used to say get a selection
   // of contacts or the sort order.  For now just get the list
@@ -29,10 +30,10 @@ Template.RapidDone.events({
   }
 });
 
-function startRapid(){
-    currentRapidList = getRapidCallList();
-    currentRapidIndex = 0;
-    nextCall();
+function startRapid() {
+  currentRapidList = getRapidCallList();
+  currentRapidIndex = 0;
+  nextCall();
 }
 
 function nextCall() {
@@ -50,12 +51,13 @@ function nextCall() {
 
 function goToNextCall() {
   currentRapidIndex++;
-  if( currentRapidIndex  >= currentRapidList.length) {
-        BlazeLayout.render('App_body', {
+  if (currentRapidIndex >= currentRapidList.length) {
+    BlazeLayout.render('App_body', {
       main: 'RapidDone'
     });
-  } else {
-  nextCall();
+  }
+  else {
+    nextCall();
   }
 }
 
@@ -132,20 +134,29 @@ Template.callDone.helpers({
 
 Template.callDone.events({
   // TODO: This should be cleaned up/modularized
-  "click .positiveCall" : function(){
-        currentContact.recordCall(currentCallLengthTimer.get(), 'positive');
-        goToNextCall();
+  "click .positiveCall": function() {
+    currentContact.recordCall(currentCallLengthTimer.get(), 'positive');
+    goToNextCall();
   },
-  "click .negativeCall" : function(){
-        currentContact.recordCall(currentCallLengthTimer.get(), 'negative');
-        goToNextCall();
+  "click .negativeCall": function() {
+    currentContact.recordCall(currentCallLengthTimer.get(), 'negative');
+    goToNextCall();
   },
-  "click .noAnswer" : function(){
-        currentContact.recordCall(currentCallLengthTimer.get(), 'noAnswer');
-        goToNextCall();
+  "click .keepCrushing": function() {
+    currentContact.recordCall(currentCallLengthTimer.get(), '');
+    goToNextCall();
   },
-  "click .leftMessage" : function(){
-        currentContact.recordCall(currentCallLengthTimer.get(), 'leftMessage')
-        goToNextCall();
+  "click .followUp": function() {
+    BlazeLayout.render('App_body', {
+      main: 'FollowUp'
+    });
+  },
+  "click .leftMessage": function() {
+    currentContact.recordCall(currentCallLengthTimer.get(), 'leftMessage');
+    goToNextCall();
   }
 });
+
+Template.FollowUp.onRendered(function() {
+  this.$('.datetimepicker').datetimepicker();
+})

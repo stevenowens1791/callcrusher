@@ -17,17 +17,17 @@
         <h3 class="panel-title">Next Call</h3>
       </div>
       <!--<div class="panel-body">-->
-        <ul class="list-group">
-          <li class="list-group-item">Name: {{name}}</li>
-          {{#if lastCalled}}
-          <li class="list-group-item">Last Called: {{FormatDate lastCalled}}</li>
-          {{/if}}
-          <li class="list-group-item">Time left: {{getCountdown}} seconds</li>
-          <li class="list-group-item">Points available: {{getPoints}}</li>
-        </ul>
-        <div class="panel-body">
-          <a class="callNow btn btn-success btn-lg btn-block" role="button"><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span> Dial Now</a>
-        </div>
+      <ul class="list-group">
+        <li class="list-group-item">Name: {{name}}</li>
+        {{#if lastCalled}}
+        <li class="list-group-item">Last Called: {{FormatDate lastCalled}}</li>
+        {{/if}}
+        <li class="list-group-item">Time left: {{getCountdown}} seconds</li>
+        <li class="list-group-item">Points available: {{getPoints}}</li>
+      </ul>
+      <div class="panel-body">
+        <a class="callNow btn btn-success btn-lg btn-block" role="button"><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span> Dial Now</a>
+      </div>
     </div>
 
 
@@ -43,13 +43,12 @@
 
     <div class="panel panel-default follow_up hidden">
       <div class="panel-heading">
-        <h3 class="panel-title">Call Results</h3>
+        <h3 class="panel-title">Call Result</h3>
       </div>
       <div class="panel-body">
-        <a class="positiveCall btn btn-success btn-lg btn-block" role="button">Positive Call</a>
+        <a class="followUp btn btn-success btn-lg btn-block" role="button">Follow up</a>
         <a class="leftMessage btn btn-info btn-lg btn-block" role="button">Left Voicemail</a>
-        <a class="noAnswer btn btn-warning btn-lg btn-block" role="button">No Answer</a>
-        <a class="negativeCall btn btn-danger btn-lg btn-block" role="button">Negative Call</a>
+        <a class="keepCrushing btn btn-lg btn-default btn-block" role="button">Keep Crushing</a>
       </div>
     </div>
 
@@ -63,6 +62,29 @@
       <h1>All done!</h1>
       <p>Great job, you completed all your calls!</p>
       <p><a class="startRapid btn btn-primary btn-lg" role="button">Start Over</a></p>
+    </div>
+  </div>
+</template>
+
+<template name="FollowUp">
+  <div class="container">
+    <div class="panel panel-default follow_up">
+      <div class="panel-heading">
+        <h3 class="panel-title">Follow Up</h3>
+      </div>
+      <div class="panel-body type_of_followup">
+        <div class="form-group ">
+          <label for="datetime">Date / Time</label>
+          <div class="input-group datetimepicker">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+            <input name="datetime" placeholder="Date / Time" class=" form-control" type="text" />
+          </div>
+        </div>
+        <a class="emailCust btn btn-success btn-lg btn-block" role="button">Email Customer</a>
+        <a class="setMeeting btn btn-primary btn-lg btn-block" role="button">Schedule Meeting</a>
+        <a class="callBack btn btn-lg btn-info btn-block" role="button">Call back</a>
+      </div>
+
     </div>
   </div>
 </template>
