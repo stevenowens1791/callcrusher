@@ -1,4 +1,5 @@
 /* global BlazeLayout Contacts ReactiveCountdown  secondsToCall pointsPerSecond */
+debugger;
 function getRapidCallList(specs) {
   // In the future specs can be used to say get a selection
   // of contacts or the sort order.  For now just get the list
@@ -159,4 +160,15 @@ Template.callDone.events({
 
 Template.FollowUp.onRendered(function() {
   this.$('.datetimepicker').datetimepicker();
+})
+
+Template.FollowUp.events({
+  "click .followUpAction": function(event) {
+    var myDate = $('[name=datetime]').val();
+    var myDetails = $('[name=details]').val();
+    var myNote = (myDate) ? myDate + ' - ' : '';
+    myNote = myNote + myDetails;
+    currentContact.recordCall(currentCallLengthTimer.get(), 'Follow Up - ' + event.target.text, myNote);
+    goToNextCall();
+  }
 })
