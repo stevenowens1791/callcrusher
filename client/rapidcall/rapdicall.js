@@ -1,5 +1,6 @@
 /* global BlazeLayout Contacts ReactiveCountdown  secondsToCall pointsPerSecond */
 debugger;
+
 function getRapidCallList(specs) {
   // In the future specs can be used to say get a selection
   // of contacts or the sort order.  For now just get the list
@@ -93,6 +94,7 @@ Template.callIntro.events({
     currentCallLengthTimer = new ReactiveCountdown(0, {
       steps: -1
     });
+    currentCallLengthTimer.start();
     BlazeLayout.render('App_body', {
       main: 'callDone'
     });
@@ -108,7 +110,6 @@ function onFocus(myFunc) {
 var currentCallLength;
 
 Template.callDone.onRendered(function() {
-  currentCallLengthTimer.start();
 
   var checkFocus = setInterval(function() {
     onFocus(function() {
