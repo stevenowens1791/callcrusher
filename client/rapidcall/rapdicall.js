@@ -116,6 +116,7 @@ Template.callDone.onRendered(function() {
       currentCallLength = currentCallLengthTimer.get();
       clearInterval(checkFocus);
       $('.follow_up').removeClass('hidden');
+      $('.callLengthDisplay').removeClass('hidden');
     })
   }, 200);
 
