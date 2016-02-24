@@ -5,7 +5,7 @@ Contact = function(doc) {
   _.extend(this, doc);   
 };
 _.extend(Contact.prototype, {
-  recordCall: function(seconds_length, outcome, comment) {
+  recordCall: function(seconds_length, outcome, comment, rapidId) {
     Contacts.update(this._id, {
       $set: {
         lastCalled: new Date(),
@@ -21,6 +21,7 @@ _.extend(Contact.prototype, {
       length_seconds: seconds_length,
       outcome: outcome,
       comment: comment,
+      rapidId: rapidId,
       callEnded: new Date() // current time
     });
   },

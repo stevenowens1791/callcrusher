@@ -1,12 +1,5 @@
   /* global FlowRouter BlazeLayout */
-  FlowRouter.route('/calls', {
-    name: 'Call',
-    action() {
-      BlazeLayout.render('App_body', {
-        main: 'Calls_show'
-      });
-    }
-  });
+
 
   FlowRouter.route('/contacts', {
     name: 'Contacts.show',

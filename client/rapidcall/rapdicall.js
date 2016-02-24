@@ -1,6 +1,4 @@
 /* global BlazeLayout Contacts ReactiveCountdown  secondsToCall pointsPerSecond */
-debugger;
-
 function getRapidCallList(specs) {
   // In the future specs can be used to say get a selection
   // of contacts or the sort order.  For now just get the list
@@ -32,9 +30,12 @@ Template.RapidDone.events({
   }
 });
 
+var RapidCallSessionId;
+
 function startRapid() {
   currentRapidList = getRapidCallList();
   currentRapidIndex = 0;
+  RapidCallSessionId = guid();
   nextCall();
 }
 
@@ -136,27 +137,15 @@ Template.callDone.helpers({
 });
 
 Template.callDone.events({
-  // TODO: This should be cleaned up/modularized
-  "click .positiveCall": function() {
-    currentContact.recordCall(currentCallLengthTimer.get(), 'positive');
-    goToNextCall();
-  },
-  "click .negativeCall": function() {
-    currentContact.recordCall(currentCallLengthTimer.get(), 'negative');
-    goToNextCall();
-  },
-  "click .keepCrushing": function() {
-    currentContact.recordCall(currentCallLengthTimer.get(), '');
+  
+  "click .callEnd": function(event) {
+    currentContact.recordCall(currentCallLengthTimer.get(), event.target.text, {}, RapidCallSessionId);
     goToNextCall();
   },
   "click .followUp": function() {
     BlazeLayout.render('App_body', {
       main: 'FollowUp'
     });
-  },
-  "click .leftMessage": function() {
-    currentContact.recordCall(currentCallLengthTimer.get(), 'leftMessage');
-    goToNextCall();
   }
 });
 
@@ -170,7 +159,7 @@ Template.FollowUp.events({
     var myDetails = $('[name=details]').val();
     var myNote = (myDate) ? myDate + ' - ' : '';
     myNote = myNote + myDetails;
-    currentContact.recordCall(currentCallLengthTimer.get(), 'Follow Up - ' + event.target.text, myNote);
+    currentContact.recordCall(currentCallLengthTimer.get(), 'Follow Up - ' + event.target.text, myNote, RapidCallSessionId);
     goToNextCall();
   }
 })
