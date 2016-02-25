@@ -41,6 +41,8 @@ Template.body.onRendered(function() {
 });
 
 
+
+
 // Add US Phone Validation
 jQuery.validator.addMethod('phoneUS', function(phone_number, element) {
   phone_number = phone_number.replace(/\s+/g, '');
@@ -76,4 +78,19 @@ guid = function() {
   }
   return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
     s4() + '-' + s4() + s4() + s4();
+}
+
+pointsForUserDuringTime = function(startTime, endTime) {
+  var pointsRecsDuringTime = PointsRecords.aggregate({
+    $match: {
+      user_id: Meteor.user()._id,
+      created_at: {
+        $gte: startTime,
+        $lt: endTime
+      },
+      totalPoints: {
+        $sum: '$points'
+      }
+    }
+  });
 }

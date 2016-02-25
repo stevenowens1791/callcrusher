@@ -21,6 +21,7 @@ _.extend(Contact.prototype, {
       }
     });
     // Create a new call record
+    var myReturnId;
     var myReturn = Calls.insert({
       to: this.name,
       to_id: this._id,
@@ -31,14 +32,18 @@ _.extend(Contact.prototype, {
       comment: details.comment,
       rapidId: details.rapidId,
       callEnded: new Date() // current time
-    });
-    
-    var myPointRecord = PointsRecords.insert({
+    }, function(doc){
+      myReturnId = doc._id;
+      var myPointRecord = PointsRecords.insert({
       user: Meteor.user().username,
       user_id : Meteor.user()._id,
       points: details.points,
+      created_at: new Date(),
       call_id: myReturn._id
     })
+    });
+    
+    
   },
   delete: function() {
     Contacts.remove(this._id);
