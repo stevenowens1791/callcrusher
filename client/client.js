@@ -31,6 +31,16 @@ Template.body.helpers({
 
 });
 
+Template.body.onRendered(function() {
+  $(function() {
+    var navMain = $("#navbar");
+    navMain.on("click", "a", null, function() {
+      navMain.collapse('hide');
+    });
+  });
+});
+
+
 // Add US Phone Validation
 jQuery.validator.addMethod('phoneUS', function(phone_number, element) {
   phone_number = phone_number.replace(/\s+/g, '');
@@ -40,7 +50,7 @@ jQuery.validator.addMethod('phoneUS', function(phone_number, element) {
 
 Template.registerHelper('FormatTimeLength', function(seconds) {
   if (seconds == null) return "";
- 
+
   return moment().startOf('day').seconds(seconds).format('mm:ss');;
 });
 
@@ -58,7 +68,7 @@ Accounts.ui.config({
   passwordSignupFields: "USERNAME_ONLY"
 });
 
- guid = function() {
+guid = function() {
   function s4() {
     return Math.floor((1 + Math.random()) * 0x10000)
       .toString(16)
