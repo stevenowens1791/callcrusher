@@ -19,6 +19,9 @@
       <!--<div class="panel-body">-->
       <ul class="list-group">
         <li class="list-group-item">Name: {{name}}</li>
+        {{#if details}}
+        <li class="list-group-item">{{details}}</li>
+        {{/if}}
         {{#if lastCalled}}
         <li class="list-group-item">Last Called: {{FormatDate lastCalled}}</li>
         {{/if}}

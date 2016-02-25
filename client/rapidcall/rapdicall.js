@@ -75,6 +75,11 @@ Template.callIntro.helpers({
   "name": function() {
     return currentContact.name;
   },
+  "details" : function(){
+    var myDetails = (currentContact.company)? currentContact.company + ' - ' : '';
+    if( currentContact.role) myDetails = myDetails + currentContact.role;
+    return myDetails;
+  },
   "lastCalled": function() {
     return currentContact.lastCalled;
   },
@@ -125,6 +130,7 @@ function onFocus(myFunc) {
 }
 
 var currentCallLength;
+var currentPointsToAward;
 
 Template.callDone.onRendered(function() {
 
@@ -132,6 +138,7 @@ Template.callDone.onRendered(function() {
     onFocus(function() {
       currentCallLengthTimer.stop();
       currentCallLength = currentCallLengthTimer.get();
+      currentPointsToAward = currentCallLength * pointsPerSecond;
       clearInterval(checkFocus);
       $('.follow_up').removeClass('hidden');
       $('.callLengthDisplay').removeClass('hidden');
@@ -155,7 +162,13 @@ Template.callDone.helpers({
 Template.callDone.events({
 
   "click .callEnd": function(event) {
-    currentContact.recordCall(currentCallLengthTimer.get(), event.target.text, '', RapidCallSessionId);
+    currentContact.recordCall({
+      seconds_length: currentCallLengthTimer.get(),
+      outcome: 'Follow Up - ' + event.target.text,
+      comment: '', 
+      rapidId: RapidCallSessionId,
+      points: currentPointsToAward
+    });
     goToNextCall();
   },
   "click .followUp": function() {
@@ -175,7 +188,13 @@ Template.FollowUp.events({
     var myDetails = $('[name=details]').val();
     var myNote = (myDate) ? myDate + ' - ' : '';
     myNote = myNote + myDetails;
-    currentContact.recordCall(currentCallLengthTimer.get(), 'Follow Up - ' + event.target.text, myNote, RapidCallSessionId);
+    currentContact.recordCall({
+      seconds_length: currentCallLengthTimer.get(),
+      outcome: 'Follow Up - ' + event.target.text,
+      comment: myNote, 
+      rapidId: RapidCallSessionId,
+      points: currentPointsToAward
+    });
     goToNextCall();
   }
 })
