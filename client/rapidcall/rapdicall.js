@@ -32,7 +32,9 @@ Template.RapidDone.events({
 });
 
 Template.RapidDone.helpers({
-  rapidSessionId: function(){return RapidCallSessionId;}
+  rapidSessionId: function() {
+    return RapidCallSessionId;
+  }
 })
 
 
@@ -77,10 +79,19 @@ Template.callIntro.helpers({
     return currentContact.lastCalled;
   },
   getCountdown: function() {
-    return currentCountdown.get();
+    if (isNaN(currentCountdown.get())) {
+      return secondsToCall;
+    }
+    else {
+      return currentCountdown.get();
+    }
   },
   getPoints: function() {
+     if (isNaN(currentCountdown.get())) {
+      return secondsToCall * pointsPerSecond;
+    } else {
     return currentCountdown.get() * pointsPerSecond;
+    }
   }
 });
 
@@ -142,9 +153,9 @@ Template.callDone.helpers({
 });
 
 Template.callDone.events({
-  
+
   "click .callEnd": function(event) {
-    currentContact.recordCall(currentCallLengthTimer.get(), event.target.text, {}, RapidCallSessionId);
+    currentContact.recordCall(currentCallLengthTimer.get(), event.target.text, '', RapidCallSessionId);
     goToNextCall();
   },
   "click .followUp": function() {
