@@ -39,7 +39,7 @@
 <template name="callDone">
   <div class="container">
     <h1>Rapid Call</h1>
-    <div class="well">Call to {{name}} at {{phone_number}} <span class="callLengthDisplay hidden">length: {{getTimer}} seconds</span></div>
+    <div class="well">Call to {{name}} at {{phone_number}} <span class="callLengthDisplay hidden">length: {{FormatTimeLength getTimer}}</span></div>
 
     <div class="panel panel-default follow_up hidden">
       <div class="panel-heading">
@@ -61,7 +61,8 @@
     <div class="jumbotron">
       <h1>All done!</h1>
       <p>Great job, you completed all your calls!</p>
-      <p><a class="startRapid btn btn-primary btn-lg" role="button">Start Over</a></p>
+      <p><a href="/calls/rapidcall/{{rapidSessionId}}" class="btn btn-primary btn-lg" role="button">Call report for this session</a></p>
+      <p><a class="startRapid btn btn-default btn-lg" role="button">Start Over</a></p>
     </div>
   </div>
 </template>

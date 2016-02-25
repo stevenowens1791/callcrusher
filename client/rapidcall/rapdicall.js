@@ -17,6 +17,7 @@ var currentContact;
 var currentCountdown;
 var currentCallLengthTimer;
 var callTimer;
+var RapidCallSessionId;
 
 Template.RapidCallStart.events({
   "click .startRapid": function() {
@@ -30,7 +31,11 @@ Template.RapidDone.events({
   }
 });
 
-var RapidCallSessionId;
+Template.RapidDone.helpers({
+  rapidSessionId: function(){return RapidCallSessionId;}
+})
+
+
 
 function startRapid() {
   currentRapidList = getRapidCallList();
