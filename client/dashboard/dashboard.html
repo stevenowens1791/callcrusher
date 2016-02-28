@@ -1,5 +1,16 @@
 <template name="Dashboard">
-<div class="container">
-  <h1>Dashboard for {{user}}</h1>
+  <div class="container">
+    <h1>Dashboard for {{user}}</h1>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Points over the past 7 days</h3>
+      </div>
+      <div class="panel-body">
+        <div  style="padding-left:0px;padding-right:0px;">
+        <canvas id="pointsChart"  ></canvas>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
