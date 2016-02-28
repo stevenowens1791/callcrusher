@@ -2,7 +2,7 @@
 /* global Contact Contacts _ */
 
 Contact = function(doc) {
-  _.extend(this, doc);   
+  _.extend(this, doc);
 };
 _.extend(Contact.prototype, {
   /* 
@@ -14,36 +14,7 @@ _.extend(Contact.prototype, {
   points: points awarded
   */
   recordCall: function(details) {
-    Contacts.update(this._id, {
-      $set: {
-        lastCalled: new Date(),
-        everCalled: true
-      }
-    });
-    // Create a new call record
-    var myReturnId;
-    var myReturn = Calls.insert({
-      to: this.name,
-      to_id: this._id,
-      from: Meteor.user().username,
-      from_id: Meteor.user()._id,
-      length_seconds: details.seconds_length,
-      outcome: details.outcome,
-      comment: details.comment,
-      rapidId: details.rapidId,
-      callEnded: new Date() // current time
-    }, function(doc){
-      myReturnId = doc._id;
-      var myPointRecord = PointsRecords.insert({
-      user: Meteor.user().username,
-      user_id : Meteor.user()._id,
-      points: details.points,
-      created_at: new Date(),
-      call_id: myReturn._id
-    })
-    });
-    
-    
+    Meteor.call('recordCallToContact', this._id, this.name, details);
   },
   delete: function() {
     Contacts.remove(this._id);
@@ -64,4 +35,54 @@ LogEntries = new Mongo.Collection("logEntries");
 pointsPerSecond = 5;
 secondsToCall = 30;
 
+Meteor.methods({
+  recordCallToContact: function(contact_id, contact_name, details) {
+    Contacts.update(contact_id, {
+      $set: {
+        lastCalled: new Date(),
+        everCalled: true
+      }
+    });
+    // Create a new call record
+    var myReturnId;
+    var myReturn = Calls.insert({
+      to: contact_name,
+      to_id: contact_id,
+      from: Meteor.user().username,
+      from_id: Meteor.user()._id,
+      length_seconds: details.seconds_length,
+      outcome: details.outcome,
+      comment: details.comment,
+      rapidId: details.rapidId,
+      callEnded: new Date(), // current time
+      callEndedISO: new Date().toISOString()
+    });
 
+      myReturnId = myReturn._id;
+      var myPointRecord = PointsRecords.insert({
+        user: Meteor.user().username,
+        user_id: Meteor.user()._id,
+        points: details.points,
+        created_at: new Date().toISOString(),
+        call_id: myReturnId
+      });
+  },
+  pointsForUserDuringTime: function(startTime, endTime) {
+    if(!(startTime instanceof Date)) startTime = new Date(startTime);
+    if(!(endTime instanceof Date)) endTime = new Date(endTime);
+
+    var pointsRecsDuringTime = PointsRecords.find({
+      user_id: Meteor.user()._id,
+      created_at: {
+        $gte: startTime.toISOString(),
+        $lt: endTime.toISOString()
+      }
+    }).fetch();
+    
+    var totalPoints = 0;
+    pointsRecsDuringTime.forEach(function(pointRec){
+      totalPoints += pointRec.points
+    })
+    return totalPoints;
+  }
+});

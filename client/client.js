@@ -80,17 +80,4 @@ guid = function() {
     s4() + '-' + s4() + s4() + s4();
 }
 
-pointsForUserDuringTime = function(startTime, endTime) {
-  var pointsRecsDuringTime = PointsRecords.aggregate({
-    $match: {
-      user_id: Meteor.user()._id,
-      created_at: {
-        $gte: startTime,
-        $lt: endTime
-      },
-      totalPoints: {
-        $sum: '$points'
-      }
-    }
-  });
-}
+
