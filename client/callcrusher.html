@@ -13,12 +13,12 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">CallCrusher</a>
+          <a class="navbar-brand" href="/">CallCrusher</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="{{#if onDashboard}}active{{/if}}"><a href="/">Dashboard</a></li>
-            {{#if currentUser}}<li class="{{#if onContacts}}active{{/if}}"><a href="/contacts">Contacts</a></li>
+            {{#if currentUser}}<li class="{{#if onDashboard}}active{{/if}}"><a href="/dashboard">Dashboard</a></li>
+            <li class="{{#if onContacts}}active{{/if}}"><a href="/contacts">Contacts</a></li>
             <li class="{{#if onCall}}active{{/if}}"><a href="/calls">Calls</a></li>
             <li class="{{#if onRapidCall}}active{{/if}}"><a href="/rapid">RapidCall</a></li>{{/if}}
             <li class="{{#if onAbout}}active{{/if}}"><a href="/about">About</a></li>

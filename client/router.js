@@ -28,11 +28,19 @@
       });
     }
   });
-  FlowRouter.route('/', {
+  FlowRouter.route('/dashboard', {
     name: 'Dashboard.show',
     action() {
       BlazeLayout.render('App_body', {
         main: 'Dashboard'
+      });
+    }
+  });
+    FlowRouter.route('/', {
+    name: 'Home.show',
+    action() {
+      BlazeLayout.render('App_body', {
+        main: 'Home'
       });
     }
   });
