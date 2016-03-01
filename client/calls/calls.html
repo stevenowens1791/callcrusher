@@ -1,47 +1,75 @@
 <template name="call_display">
-<tr>
-	<td>{{to}}</td>
-	<td>{{from}}</td>
-	<td>{{FormatDatetime callEnded}}</td>
-	<td>{{FormatTimeLength length_seconds}}</td>
-	<td>{{> outcomes_display}}</td>
+	<tr>
+		<td>{{to}}</td>
+		<td class="hidden-xs">{{from}}</td>
+		<td>{{FormatDatetime callEnded}}</td>
+		<td>{{FormatTimeLength length_seconds}}</td>
+		<td class="outcome_cell">{{> outcomes_display}}</td>
 
-</tr>
+	</tr>
+</template>
+
+<template name="call_display_card">
+	<div class="call-card col-xs-12 col-sm-4">
+		<div class="panel panel-default">
+			<ul class="list-group">
+				<li class="list-group-item">To: {{to}}</li>
+				<li class="list-group-item">From: {{from}}</li>
+				<li class="list-group-item">Date: {{FormatDatetime callEnded}}</li>
+				<li class="list-group-item">Length: {{FormatTimeLength length_seconds}}</li>
+				{{#if outcomes}}
+				<li class="list-group-item">Follow Up:</li>
+				{{#each outcomes}}
+				<li class="list-group-item"><b>{{outcome}}</b> {{comment}}</li>
+				{{/each}} {{/if}}
+			</ul>
+		</div>
+	</div>
 </template>
 
 <template name="outcomes_display">
 	{{#if outcomesExist}}
-	<span class="badge" data-toggle="popover" data-content="{{#each outcomes}}{{> outcome_display}}{{/each}}">{{outcome_count}}</span>
-	{{else}}
-	{{/if}}
+	<span class="badge" data-toggle="popover" data-content="{{#each outcomes}}{{> outcome_display}}{{/each}}">{{outcome_count}}</span> {{else}} {{/if}}
 </template>
 
 <template name="outcome_display">
-	<b>{{outcome}}</b> {{comment}}<br />
+	<b>{{outcome}}</b> {{comment}}
+	<hr>
 </template>
 
 <template name="Calls_show">
- <div class="container">
-  <h1>Calls</h1>
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-4">
+				<h1>Calls</h1></div>
+			<div class="col-xs-8 controls">
+				<div class="btn-group" role="group" aria-label="Display">
+					<button type="button" class="showTable btn {{#if isTable}}btn-primary{{else}}btn-default{{/if}}">Table</button>
+					<button type="button" class="showDetails btn {{#if isDetails}}btn-primary{{else}}btn-default{{/if}}">Details</button>
+				</div>
+			</div>
+		</div>
 
 
-
-<table class="table table-responsive">
-		<thead>
-			<tr>
-				<th>To</th>
-				<th>From</th>
-				<th>Date</th>
-				<th>Length</th>
-				<th>Outcome</th>
-			</tr>
-		</thead>
-  <tbody>
-      {{#each calls}}
-        {{> call_display}}
-      {{/each}}
-  </tbody>
-   </table>
-  </div>
+		{{#if isTable}}
+		<table class="table table-responsive">
+			<thead>
+				<tr>
+					<th>To</th>
+					<th class="hidden-xs">From</th>
+					<th>Date</th>
+					<th>Length</th>
+					<th class="outcome_cell">Outcome</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{#each calls}} {{> call_display}} {{/each}}
+			</tbody>
+		</table>
+		{{else}}
+		<div class="row">
+			{{#each calls}} {{> call_display_card}} {{/each}}
+		</div>
+		{{/if}}
+	</div>
 </template>
-

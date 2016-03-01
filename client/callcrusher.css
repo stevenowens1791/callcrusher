@@ -1,1 +1,13 @@
 /* CSS declarations go here */
+.call-card .panel {
+    height: 300px;
+}
+
+.controls {
+    text-align: right;
+    margin-top: 1.2em;
+}
+
+.outcome_cell {
+    text-align:center;
+}

@@ -20,6 +20,11 @@ FlowRouter.route('/calls/rapidcall/:rapidCallSessionId', {
     }
   });
 
+
+Template.Calls_show.onRendered(function(){
+  Session.set('displayMode','table')
+});
+
 Template.Calls_show.helpers({
   calls: function() {
     if(rapidCallSessionId) {
@@ -27,8 +32,23 @@ Template.Calls_show.helpers({
     } else {
     return Calls.find({},{sort:{callEnded: -1}});
     }
+  },
+  isTable: function(){
+    return Session.get('displayMode') == 'table';
+  },
+  isDetails: function(){
+    return Session.get('displayMode') == 'details';
   }
 });
+
+Template.Calls_show.events({
+  "click .showTable": function(){
+    Session.set('displayMode','table');
+  },
+  "click .showDetails": function(){
+    Session.set('displayMode','details');
+  }
+})
 
 Template.outcomes_display.onRendered(function(){
   this.$('[data-toggle="popover"]').popover({
