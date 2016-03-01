@@ -183,6 +183,11 @@ Template.FollowUp.onRendered(function() {
 })
 
 Template.FollowUp.events({
+  "click .goBack" : function(){
+    BlazeLayout.render('App_body', {
+      main: 'callDone'
+    });
+  },
   "click .followUpAction": function(event) {
     var myDate = $('[name=datetime]').val();
     var myDetails = $('[name=details]').val();
