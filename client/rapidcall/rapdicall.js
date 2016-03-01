@@ -71,13 +71,18 @@ function goToNextCall() {
   }
 }
 
+function recordCall() {
+  currentContact.recordCall(currentCallRecord);
+  goToNextCall();
+}
+
 Template.callIntro.helpers({
   "name": function() {
     return currentContact.name;
   },
-  "details" : function(){
-    var myDetails = (currentContact.company)? currentContact.company + ' - ' : '';
-    if( currentContact.role) myDetails = myDetails + currentContact.role;
+  "details": function() {
+    var myDetails = (currentContact.company) ? currentContact.company + ' - ' : '';
+    if (currentContact.role) myDetails = myDetails + currentContact.role;
     return myDetails;
   },
   "lastCalled": function() {
@@ -92,10 +97,11 @@ Template.callIntro.helpers({
     }
   },
   getPoints: function() {
-     if (isNaN(currentCountdown.get())) {
+    if (isNaN(currentCountdown.get())) {
       return secondsToCall * pointsPerSecond;
-    } else {
-    return currentCountdown.get() * pointsPerSecond;
+    }
+    else {
+      return currentCountdown.get() * pointsPerSecond;
     }
   }
 });
@@ -131,7 +137,7 @@ function onFocus(myFunc) {
 
 var currentCallLength;
 var currentPointsToAward;
-
+var currentCallRecord;
 Template.callDone.onRendered(function() {
 
   var checkFocus = setInterval(function() {
@@ -140,6 +146,13 @@ Template.callDone.onRendered(function() {
       currentCallLength = currentCallLengthTimer.get();
       currentPointsToAward = currentCallLength * pointsPerSecond;
       clearInterval(checkFocus);
+      // Create the basic call record
+      currentCallRecord = {
+        seconds_length: currentCallLengthTimer.get(),
+        rapidId: RapidCallSessionId,
+        points: currentPointsToAward,
+        outcomes: []
+      };
       $('.follow_up').removeClass('hidden');
       $('.callLengthDisplay').removeClass('hidden');
     })
@@ -160,16 +173,23 @@ Template.callDone.helpers({
 });
 
 Template.callDone.events({
-
-  "click .callEnd": function(event) {
-    currentContact.recordCall({
-      seconds_length: currentCallLengthTimer.get(),
-      outcome: 'Follow Up - ' + event.target.text,
-      comment: '', 
-      rapidId: RapidCallSessionId,
-      points: currentPointsToAward
+  "click .keepCrushing" : function(){
+    var myNewOutcome = {
+      outcome: 'Keep Crushing',
+      comment: ''
+    };
+    currentCallRecord.outcomes.push(myNewOutcome);
+    recordCall();
+  },
+  "click .leftMessage": function(event) {
+     var myNewOutcome = {
+      outcome: event.target.text,
+      comment: ''
+    };
+    currentCallRecord.outcomes.push(myNewOutcome);
+     BlazeLayout.render('App_body', {
+      main: 'FollowUp2'
     });
-    goToNextCall();
   },
   "click .followUp": function() {
     BlazeLayout.render('App_body', {
@@ -183,7 +203,7 @@ Template.FollowUp.onRendered(function() {
 })
 
 Template.FollowUp.events({
-  "click .goBack" : function(){
+  "click .goBack": function() {
     BlazeLayout.render('App_body', {
       main: 'callDone'
     });
@@ -193,13 +213,26 @@ Template.FollowUp.events({
     var myDetails = $('[name=details]').val();
     var myNote = (myDate) ? myDate + ' - ' : '';
     myNote = myNote + myDetails;
-    currentContact.recordCall({
-      seconds_length: currentCallLengthTimer.get(),
-      outcome: 'Follow Up - ' + event.target.text,
-      comment: myNote, 
-      rapidId: RapidCallSessionId,
-      points: currentPointsToAward
+    var myNewOutcome = {
+      outcome: event.target.text,
+      comment: ''
+    };
+    currentCallRecord.outcomes.push(myNewOutcome);
+    BlazeLayout.render('App_body', {
+      main: 'FollowUp2'
     });
+   
     goToNextCall();
   }
-})
+});
+
+Template.FollowUp2.events({
+  "click .nextCall" : function(){
+    recordCall();
+  },
+  "click .goBack" : function(){
+    BlazeLayout.render('App_body', {
+      main: 'FollowUp'
+    });
+  }
+});
