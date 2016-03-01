@@ -23,6 +23,15 @@ _pointsForUserDuringTime = function(startTime, endTime) {
   }
   
   Meteor.methods({
+    sendCallReportEmail:function(options){
+    // you should probably validate options using check before actually
+    // sending email
+    check(options,{
+      from:String,
+      // etc...
+    });
+    Email.send(options);
+  },
   recordCallToContact: function(contact_id, contact_name, details) {
     Contacts.update(contact_id, {
       $set: {
@@ -69,5 +78,17 @@ _pointsForUserDuringTime = function(startTime, endTime) {
           arrPoints.push({'date':myDay.toISOString(), 'points' : points});
       }
       return arrPoints;
+  }
+});
+
+Meteor.methods({
+  sendShareEmail:function(options){
+    // you should probably validate options using check before actually
+    // sending email
+    check(options,{
+      from:String,
+      // etc...
+    });
+    Email.send(options);
   }
 });
