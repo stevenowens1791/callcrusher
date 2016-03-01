@@ -1,3 +1,4 @@
+  /* global FlowRouter Calls BlazeLayout outcomes*/
   FlowRouter.route('/calls', {
     name: 'Call',
     action() {
@@ -28,3 +29,22 @@ Template.Calls_show.helpers({
     }
   }
 });
+
+Template.outcomes_display.onRendered(function(){
+  this.$('[data-toggle="popover"]').popover({
+    html: true,
+    placement: 'auto',
+    container: 'body'
+  })
+})
+
+Template.outcomes_display.helpers({
+  outcome_count: function(){
+    if(!this.outcomes) return '';
+    return this.outcomes.length;
+  },
+  outcomesExist: function(){
+    if(!this.outcomes) return false;
+    return this.outcomes.length > 0;
+  }
+})

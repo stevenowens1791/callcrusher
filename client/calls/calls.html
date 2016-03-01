@@ -4,9 +4,20 @@
 	<td>{{from}}</td>
 	<td>{{FormatDatetime callEnded}}</td>
 	<td>{{FormatTimeLength length_seconds}}</td>
-	<td>{{outcome}}</td>
-	<td>{{comment}}</td>
+	<td>{{> outcomes_display}}</td>
+
 </tr>
+</template>
+
+<template name="outcomes_display">
+	{{#if outcomesExist}}
+	<span class="badge" data-toggle="popover" data-content="{{#each outcomes}}{{> outcome_display}}{{/each}}">{{outcome_count}}</span>
+	{{else}}
+	{{/if}}
+</template>
+
+<template name="outcome_display">
+	<b>{{outcome}}</b> {{comment}}<br />
 </template>
 
 <template name="Calls_show">
@@ -23,7 +34,6 @@
 				<th>Date</th>
 				<th>Length</th>
 				<th>Outcome</th>
-				<th>Note</th>
 			</tr>
 		</thead>
   <tbody>

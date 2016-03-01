@@ -1,8 +1,9 @@
+/* global PointsRecords Contacts Calls */
 Meteor.startup(function () {
     // code to run on server at startup
   });
   
-_pointsForUserDuringTime= function(startTime, endTime) {
+_pointsForUserDuringTime = function(startTime, endTime) {
     if(!(startTime instanceof Date)) startTime = new Date(startTime);
     if(!(endTime instanceof Date)) endTime = new Date(endTime);
 
