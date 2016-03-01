@@ -173,7 +173,7 @@ Template.callDone.helpers({
 });
 
 Template.callDone.events({
-  "click .keepCrushing" : function(){
+  "click .keepCrushing": function() {
     var myNewOutcome = {
       outcome: 'Keep Crushing',
       comment: ''
@@ -182,12 +182,12 @@ Template.callDone.events({
     recordCall();
   },
   "click .leftMessage": function(event) {
-     var myNewOutcome = {
+    var myNewOutcome = {
       outcome: event.target.text,
       comment: ''
     };
     currentCallRecord.outcomes.push(myNewOutcome);
-     BlazeLayout.render('App_body', {
+    BlazeLayout.render('App_body', {
       main: 'FollowUp2'
     });
   },
@@ -221,16 +221,14 @@ Template.FollowUp.events({
     BlazeLayout.render('App_body', {
       main: 'FollowUp2'
     });
-   
-    goToNextCall();
   }
 });
 
 Template.FollowUp2.events({
-  "click .nextCall" : function(){
+  "click .nextCall": function() {
     recordCall();
   },
-  "click .goBack" : function(){
+  "click .goBack": function() {
     BlazeLayout.render('App_body', {
       main: 'FollowUp'
     });

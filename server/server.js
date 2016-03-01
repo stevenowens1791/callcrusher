@@ -37,8 +37,7 @@ _pointsForUserDuringTime= function(startTime, endTime) {
       from: Meteor.user().username,
       from_id: Meteor.user()._id,
       length_seconds: details.seconds_length,
-      outcome: details.outcome,
-      comment: details.comment,
+      outcomes: details.outcomes,
       rapidId: details.rapidId,
       callEnded: new Date(), // current time
       callEndedISO: new Date().toISOString()
