@@ -47,6 +47,15 @@ Template.Calls_show.events({
   },
   "click .showDetails": function(){
     Session.set('displayMode','details');
+  },
+  "click .emailMe" : function(){
+    var html = inlineCSS($('#__blaze-root').html()).html()
+  
+    var options = {
+      html: html,
+      subject: 'Your call report'
+    }
+    Meteor.call('sendCallReportEmail', options);
   }
 })
 

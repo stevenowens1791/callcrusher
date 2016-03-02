@@ -153,3 +153,16 @@ formatPointDataForChart = function(pointData) {
   console.log(data);
   return data;
 }
+
+inlineCSS = function(html) {
+  var rules = document.styleSheets[0].cssRules;
+  var myDoc = $(html)
+  for (var idx = 0, len = rules.length; idx < len; idx++) {
+    if (rules[idx].selectorText && rules[idx].selectorText.indexOf('::') == -1) {
+      myDoc.find(rules[idx].selectorText).each(function(i, elem) {
+        elem.style.cssText += rules[idx].style.cssText;
+      });
+    }
+  }
+  return myDoc;
+}

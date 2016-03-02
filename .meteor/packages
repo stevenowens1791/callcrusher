@@ -31,3 +31,6 @@ themeteorchef:jquery-validation
 matb33:bootstrap-transition-js
 tsega:bootstrap3-datetimepicker
 chart:chart
+email
+gfk:mailgun-api
+sacha:juice
